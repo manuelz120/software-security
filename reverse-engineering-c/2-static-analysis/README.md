@@ -2,11 +2,14 @@
 
 Given a simple C program that reads an input string and compares it to
 a password. If the strings match, a secret (product key) is shown.
+
 ```
 $ make
 gcc -std=c11 -Wall -o secret secret.c
 ```
+
 Note that we use the compiler **without debug flag (-g)**.
+
 ```
 $ ./secret xxxxx
 Invalid password!
@@ -14,13 +17,14 @@ Invalid password!
 $ ./secret 6LJ53vc6kFtwY_
 ACD0-84F1-9A56-47BC
 ```
-Now, let's use static analysis practices to reverse engineer that binary file to 
-find out the hidden secret...
 
+Now, let's use static analysis practices to reverse engineer that binary file to
+find out the hidden secret...
 
 ## Static Analysis
 
 Using the tool **file** we can determine the file type of the executable:
+
 ```
 $ file secret
 secret: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=b5dfc30bffe9c6bddb31a61aa8ba5e75759e323b, not stripped
@@ -28,6 +32,7 @@ secret: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked,
 
 Using the tool **hexdump** we can display the binary content of the executable
 (including ASCII text if we add the `-C` flag).
+
 ```
 $ hexdump -C secret
 00000000  7f 45 4c 46 02 01 01 00  00 00 00 00 00 00 00 00  |.ELF............|
@@ -37,6 +42,7 @@ $ hexdump -C secret
 ```
 
 To extract only string literals used in the binary, we can use the command **strings**:
+
 ```
 $ strings secret
 /lib64/ld-linux-x86-64.so.2
@@ -60,9 +66,11 @@ Invalid password!
 GCC: (Debian 8.3.0-6) 8.3.0
 ...
 ```
+
 These strings could be used in a wordlist file to perform brute force attacks...
 
 Finally, we can disassemble the binary using **objdump**
+
 ```
 $ objdump -d ./secret | less
 ...
@@ -80,24 +88,22 @@ $ objdump -d ./secret | less
     118d:       b8 01 00 00 00          mov    $0x1,%eax
     1192:       eb 05                   jmp    1199 <is_correct_password+0x2f>
     1194:       b8 00 00 00 00          mov    $0x0,%eax
-    1199:       c9                      leaveq 
-    119a:       c3                      retq   
+    1199:       c9                      leaveq
+    119a:       c3                      retq
 ...
 ```
 
-Assembly code is difficult to read, especially when it comes to large binary files. 
+Assembly code is difficult to read, especially when it comes to large binary files.
 Analysis tools such as **Hopper** can be very helpful here.
 Hopper can represent a binary in assembly, as data flow graph or pseudocode.
 
 ![Hopper Pseudo Code](Hopper-Pseudocode.png)
 
-This **pseudocode** is a mixture of C and assembler code that cannot be compiled. 
+This **pseudocode** is a mixture of C and assembler code that cannot be compiled.
 Nevertheless, this representation makes the analysis much easier.
 
-
-
 ## References
-* [Hopper Disassembler](https://www.hopperapp.com/) the reverse engineering tool that lets you disassemble, decompile and debug your applications.
 
+- [Hopper Disassembler](https://www.hopperapp.com/) the reverse engineering tool that lets you disassemble, decompile and debug your applications.
 
-*Egon Teiniker, 2020-2021, GPL v3.0* 
+_Egon Teiniker, 2020-2021, GPL v3.0_

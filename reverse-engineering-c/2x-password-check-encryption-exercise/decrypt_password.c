@@ -3,7 +3,6 @@
 #include <stdbool.h>
 #include <string.h>
 
-
 int main()
 {
     char password[256];
@@ -14,5 +13,5 @@ int main()
 
     printf("plaintext password: %s\n", password);
 
-	return 0;
+    return 0;
 }

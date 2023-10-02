@@ -1,11 +1,12 @@
 # From C Source Code to an Executable
 
-## One Step Build 
+## One Step Build
 
 We start our journey with a simple C source code example:
+
 ```C
 #include <stdio.h>
- 
+
 int main()
 {
     for(int i=0; i<10; i++)
@@ -24,28 +25,28 @@ $ gcc -std=c99 -g -Wall -o hello hello.c
 ```
 
 To start the executable, type:
+
 ```
 $ ./hello
 ```
 
-
-## Detailed Build Process 
+## Detailed Build Process
 
 In fact, the path from C source code to an executable includes several intermediate steps.
 
 ![C Build Process](C-Build-Process.png)
 
 ### C Preprocessor
+
 The preprocessor modifies the source code on a text basis (`#` commands). Header files are integrated, macros are replaced, etc.
 
 We can start the preprocessor as an independent tool called **cpp** and have the output written to its own file.
 
 ```
-$ cpp hello.c _hello.c 
+$ cpp hello.c _hello.c
 ```
 
 After the preprocessor has run, all the information the compiler needs is in one file: `_hello.c`.
-
 
 ### Compile C Code into Assembly Code
 
@@ -57,28 +58,28 @@ $ gcc -std=c99 -S _hello.c
 
 Assembly code is not machine code. It is a human-readable form of machine code in an ASCII file: `_hello.s`.
 
-
 ### Convert Assembly Code to an Object File
 
-An **assembler** called **as** translates assembly code into machine language. 
+An **assembler** called **as** translates assembly code into machine language.
 A binary file is created, the so-called **object file**.
 
 Run the assembler
+
 ```
 $ as -o hello.o _hello.s
 ```
 
-Although the object file `hello.o` is a binary file, it **cannot be executed** yet. 
+Although the object file `hello.o` is a binary file, it **cannot be executed** yet.
 
-It is just the binary form of the original C source file and contains 
+It is just the binary form of the original C source file and contains
 no startup code or library functions.
 
-A real world program consists of a large number of C files and therefore 
+A real world program consists of a large number of C files and therefore
 also of many object files.
 
 ### Link the Object File into an Executable
 
-The linker connects the object files with the necessary libraries 
+The linker connects the object files with the necessary libraries
 (at least the standard library `libc`) to the final executable.
 
 ```
@@ -87,17 +88,15 @@ $ gcc -o hello hello.o
 
 Note that a C library is also just a collection of object files.
 
-
 ### Run the Executable
 
 The generated executable can now be started as before:
 
 ```
-$ ./hello 
+$ ./hello
 ```
 
 Note that the steps presented are always carried out, even if the intermediate files are not saved.
-
 
 ## Debugging
 
@@ -119,15 +118,15 @@ $ gdb ./hello
 
 (gdb) set disassembly-flavor intel
 
-(gdb) list 
+(gdb) list
 1   #include <stdio.h>
-2   
+2
 3   int main()
 4   {
 5       for(int i=0; i<10; i++)
 6       {
 7           printf("Hello world!\n");
-8       }   
+8       }
 9       return 0;
 10  }
 ```
@@ -165,7 +164,7 @@ After the program has stopped at a breakpoint, you can use `next` to execute ind
 Breakpoint 1 at 0x4004df: file hello.c, line 5.
 
 (gdb) run
-Starting program: /home/student/workspace-2014ws-ims14-SWSecurity/c-helloworld/hello 
+Starting program: /home/student/workspace-2014ws-ims14-SWSecurity/c-helloworld/hello
 (gdb) next
 (gdb) next
 (gdb) next
@@ -191,7 +190,7 @@ The debugger is a very powerful tool for reverse engineering, since it allows yo
 
 ## References
 
-* K. N. King. **C Programming, A Modern Approach.** W. W. Norton & Company, inc. 2nd Edition 2008. 
-    * Chapter 14: The Preprocessor
+- K. N. King. **C Programming, A Modern Approach.** W. W. Norton & Company, inc. 2nd Edition 2008.
+  - Chapter 14: The Preprocessor
 
-*Egon Teiniker, 2020-2022, GPL v3.0*
+_Egon Teiniker, 2020-2022, GPL v3.0_
