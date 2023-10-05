@@ -194,7 +194,4 @@ The debugger is a very powerful tool for reverse engineering, since it allows yo
 
   - Chapter 14: The Preprocessor
 
-- [GDB Cheatsheet](https://darkdust.net/files/GDB%20Cheat%20Sheet.pdf)
-- [PEDA](https://github.com/longld/peda)
-
 _Egon Teiniker, 2020-2022, GPL v3.0_

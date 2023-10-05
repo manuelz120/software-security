@@ -24,4 +24,3 @@ Give an example of a valid passord:
 
 // TODO
 
-Helpful tools: https://dogbolt.org/
