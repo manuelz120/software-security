@@ -9,7 +9,11 @@ RUN apt-get update && apt-get install -y \
     strace \ 
     cmake \ 
     bsdmainutils \
-    file
+    file \
+    git
+
+RUN git clone https://github.com/longld/peda.git ~/peda && \
+    echo "source ~/peda/peda.py" >> ~/.gdbinit
 
 # Set the working directory to /app
 WORKDIR /app
