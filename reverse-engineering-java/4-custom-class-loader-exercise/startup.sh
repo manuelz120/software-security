@@ -1,2 +1,0 @@
-#!/bin/sh
-java -Djava.system.class.loader=org.se.lab.CustomClassLoader -cp target/Java-ClassLoader-Custom-0.0.1-SNAPSHOT.jar:/home/manuel/.m2/repository/junit/junit/4.13/junit-4.13.jar:/home/manuel/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/manuel/.m2/repository/commons-codec/commons-codec/1.15/commons-codec-1.15.jar org.se.lab.Main fsda
