@@ -1,0 +1,10 @@
+/.settings/
+/target/
+/bin/
+/build/
+/.classpath
+/.project
+/ShoppingCart.map
+/ShoppingCart-1.0.0.jar
+/ShoppingCart-1.0.0-out.jar
+proguard-7.4.0
